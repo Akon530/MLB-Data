@@ -1,0 +1,19 @@
+import pandas as pd
+MLB = pd.read_excel('MLB_stats.xlsx', sheet_name = 'MLB')
+
+#Which team had the greatest number of total home runs?
+print('Team with greatest number of Total Home Runs: ')
+MLB_GreatestHR = MLB[['Team', 'HR']] #organizes HR values by Team
+print(MLB_GreatestHR.max()) #prints max HR Value
+print('')
+
+#Which team has the greatest number of strikeouts accross 3 years?
+print('Team with greatest number of strikeouts accross 3 years: ')
+MLB_Year = MLB[['Team','SO']].groupby('Team') #Groups SO by team, adding the total SO for each team
+print(MLB_Year.sum().sort_values(by='SO',ascending=False).head(1)) #Organizes data in descending order, then takes top value
+print('')
+
+#What is the total home runs by League accross 3 years?
+print('Total home runs by League accross 3 years: ')
+MLB_HomeRuns = MLB.groupby(['Year', 'League']).agg({'HR':['sum']}) #Aggregates data of HR for each League by Year
+print(MLB_HomeRuns.head(100)) #Outputs data
